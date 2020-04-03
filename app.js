@@ -72,7 +72,7 @@ passport.use(new LocalStrategy(
         if (user) {
             done(null, user)
         } else {
-            done(null, false, { message: 'Incorrect username or password' })
+            done(null, false, { message: 'Incorrect username or password', status: false })
         }
     }
 ));

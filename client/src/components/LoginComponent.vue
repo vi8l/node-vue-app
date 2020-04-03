@@ -22,6 +22,11 @@ import router from '../router';
 const API_URL = 'http://localhost:3000/';
 export default {
   name: 'Login',
+  data() {
+    return {
+      error: '',
+    };
+  },
   methods: {
     login: (e) => {
       e.preventDefault();
@@ -35,11 +40,15 @@ export default {
         axios.post(`${API_URL}${'login'}`, data)
           .then((response) => {
             console.log('Logged in', response);
-            localStorage.setItem('user', JSON.stringify(response));
-            router.push('/home');
+            if (response.username) {
+              localStorage.setItem('user', JSON.stringify(response));
+              router.push('/home');
+            } else {
+              console.log('Wrong credentials');
+            }
           })
-          .catch((errors) => {
-            console.log('Cannot log in', errors);
+          .catch(() => {
+            console.log('Wrong credentials');
           });
       };
       login();
