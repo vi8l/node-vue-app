@@ -4,7 +4,12 @@ const passport = require('passport');
 const cookieSession = require('cookie-session');
 const LocalStrategy = require('passport-local').Strategy;
 const bodyParser = require('body-parser');
+let cors = require('cors');
+var corsOptions = {
+    origin: "http://localhost:8080"
+};
 
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(cookieSession({
     name: 'logincookies',
@@ -72,17 +77,17 @@ passport.use(new LocalStrategy(
     }
 ));
 
-passport.serializeUser((user, done) => {
-    done(null, user.username)
-})
+// passport.serializeUser((user, done) => {
+//     done(null, user.username)
+// })
 
-passport.deserializeUser((username, done) => {
-    let user = users.find((user) => {
-        return user.username === username
-    })
+// passport.deserializeUser((username, done) => {
+//     let user = users.find((user) => {
+//         return user.username === username
+//     })
 
-    done(null, user)
-})
+//     done(null, user)
+// })
 
 app.listen(port, () => {
     console.log('Listening on port ' + port)
